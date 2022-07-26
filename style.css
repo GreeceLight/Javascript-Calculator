@@ -5,24 +5,50 @@ body {
     justify-content: center; align-items: center;
 }
 
-#Calculator-Base {
+#calculator-base {
     display: flex;
     flex-direction: column;
     justify-content: start; align-items: center;
 
-    width: 450px;
-    height: 600px;
+    width: auto; height: auto;
 
     border-radius: 20px;
-    background-color: beige;
+    border: black 2px solid;
+    background-color: grey;
 }
 
-.Screen {
-    width: 350px;
-    height: 100px;
+.screen {
+    width: 350px; height: 100px;
+    flex-shrink: 0;
 
-    margin: 50px;
+    margin: 30px;
 
     border-radius: 10px;
-    background-color: cadetblue;
+    border: rgb(80, 108, 117) solid 2px;
+    background-color: rgb(136, 197, 218);
+}
+
+.buttoncontainer {
+    display: grid;
+
+    grid-template-columns: repeat(4, 5vmax);
+    grid-template-rows: repeat(5, 5vmax);
+
+    margin: 30px;
+    gap: 10px;
+}
+
+.button {
+    display: flex;
+    justify-content: center; align-items: center;
+
+    font-size:40px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    border-radius: 10px;
+    background-color: lightgray;
+}
+
+.button#word{
+    font-size: 20px;
 }
