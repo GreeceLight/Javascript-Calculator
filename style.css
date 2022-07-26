@@ -1,5 +1,28 @@
 body {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+
+    justify-content: center; align-items: center;
+}
+
+#Calculator-Base {
+    display: flex;
+    flex-direction: column;
+    justify-content: start; align-items: center;
+
+    width: 450px;
+    height: 600px;
+
+    border-radius: 20px;
+    background-color: beige;
+}
+
+.Screen {
+    width: 350px;
+    height: 100px;
+
+    margin: 50px;
+
+    border-radius: 10px;
+    background-color: cadetblue;
 }
