@@ -1,11 +1,10 @@
+const screenDisplay = document.querySelector("#screentext");
 
+const buttons = document.querySelectorAll(".button");
 
-
-
-
-
-
-
+buttons.forEach(button => button.addEventListener('click', function(){
+    screenDisplay.textContent = screenDisplay.textContent.concat(button.textContent);
+}))
 
 
 

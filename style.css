@@ -20,8 +20,12 @@ body {
 .screen {
     width: 350px; height: 100px;
     flex-shrink: 0;
+    display: flex;
+    justify-content: end; align-items: center;
 
     margin: 30px;
+
+    font-size: 50px;
 
     border-radius: 10px;
     border: rgb(80, 108, 117) solid 2px;
