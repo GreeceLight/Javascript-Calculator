@@ -5,7 +5,7 @@ body {
     justify-content: center; align-items: center;
 }
 
-#Calculator-Base {
+#calculator-base {
     display: flex;
     flex-direction: column;
     justify-content: start; align-items: center;
@@ -17,12 +17,37 @@ body {
     background-color: beige;
 }
 
-.Screen {
+.screen {
     width: 350px;
     height: 100px;
 
-    margin: 50px;
+    margin: 30px;
 
     border-radius: 10px;
     background-color: cadetblue;
+}
+
+.buttoncontainer {
+    display: grid;
+
+    grid-template-columns: repeat(4, 4vmax);
+    grid-template-rows: repeat(5, 4vmax);
+
+    margin: 30px;
+    gap: 10px;
+}
+
+.button {
+    display: flex;
+    justify-content: center; align-items: center;
+
+    font-size:40px;
+
+
+    border-radius: 10px;
+    background-color: darkgoldenrod;
+}
+
+.button#word{
+    font-size: 20px;
 }
