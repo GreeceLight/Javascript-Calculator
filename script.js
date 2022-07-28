@@ -80,6 +80,7 @@ function multiply(mulNum1, mulNum2){
     screenDisplay.textContent = '';
 }
 function power(powNum1, powNum2){
+    if(powNum2 == 0) powNum2 = 1
     powNum1 = parseInt(screenDisplay.textContent) ** powNum2;
     powNum2 = powNum1;
     expression.num1 = powNum1;
@@ -88,6 +89,7 @@ function power(powNum1, powNum2){
     screenDisplay.textContent = '';
 }
 function divide(divNum1, divNum2){
+    if(divNum2 == 0) divNum2 = 1
     divNum1 = parseInt(screenDisplay.textContent) / divNum2;
     divNum2 = divNum1;
     expression.num1 = divNum1;
@@ -100,18 +102,23 @@ function equal(){
         case "add":
             add(expression.num1, expression.num2);
             console.log(expression.num1);
+            break;
         case "subtract":
             subtract(expression.num1, expression.num2);
             console.log(expression.num1);
+            break;
         case "multiply":
             multiply(expression.num1, expression.num2);
             console.log(expression.num1);
+            break;
         case "divide":
             divide(expression.num1, expression.num2);
             console.log(expression.num1);
+            break;
         case "power":
             power(expression.num1, expression.num2);
             console.log(expression.num1);
+            break;
     }
 }
 function reset(){expression = {num1 : 0,num2 : 0}}
