@@ -2,6 +2,7 @@
 const screenDisplay = document.querySelector("#screentext");
 const buttons = document.querySelectorAll("#number");
 const clearButton = document.querySelector("#clear");
+const partyButton = document.querySelector("#party");
 const addButton = document.querySelector("#add");
 const subtractButton = document.querySelector("#subtract");
 const multiplyButton = document.querySelector("#multiply");
@@ -14,11 +15,23 @@ expression = {
     num2 : 0,
     sign : "add"
 }
+let inPartyMode = false;
 //All Event listeners
 //Clears all variables from calculator and clears the screen
 clearButton.addEventListener('click', function(){
     reset();
     screenDisplay.textContent = ''
+})
+
+partyButton.addEventListener('click', function(){
+    if(inPartyMode){
+        document.querySelector('body').classList.remove('animation');
+        inPartyMode = false
+    }
+    else{
+        document.querySelector('body').classList.add('animation')
+        inPartyMode = true
+    } 
 })
 
 //Makes pressing all number related buttons to show on screen
