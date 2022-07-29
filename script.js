@@ -15,6 +15,7 @@ expression = {
     num2 : 0,
     sign : "add"
 }
+//To enable Party Mode
 let inPartyMode = false;
 //All Event listeners
 //Clears all variables from calculator and clears the screen
@@ -84,7 +85,7 @@ function subtract(subnum1, subnum2){
     screenDisplay.textContent = '';
 }
 function multiply(mulNum1, mulNum2){
-    if(mulNum1 == 0) mulNum2 = 1;
+    if(mulNum2 == 0 && mulNum1 != 0) mulNum2 = 1;
     mulNum1 = parseInt(screenDisplay.textContent) * mulNum2;
     mulNum2 = mulNum1;
     expression.num1 = mulNum1;
