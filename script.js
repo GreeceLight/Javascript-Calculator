@@ -53,15 +53,17 @@ multiplyButton.addEventListener('click', function(){
 })
 
 powerButton.addEventListener('click', function(){
-    power();
+    if(TotalNum == 0){powerUp()}
+    else{powerTo()}
 })
 
 divideButton.addEventListener('click', function(){
-    divide();
+    if(TotalNum == 0){divideWith()}
+    else {divideBy()}
 })
 
 equalButton.addEventListener('click', function(){
-    screenDisplay.textContent = equal(expression.sign);
+    equal();
 })
 
 
@@ -73,47 +75,70 @@ function add(){
 }
 function subtract(){
     let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum = inputNum - TotalNum;
+    TotalNum =  (TotalNum * (-1)) - inputNum;
     sign = "subtract"
     clearScreen();
 }
 function multiply(){
+    if(TotalNum == 0){
+        TotalNum = 1;
+    }
     let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum = inputNum - TotalNum;
+    TotalNum = inputNum * TotalNum;
     sign = "multiply";
     clearScreen();
 }
 function power(){
     let inputNum = parseInt(screenDisplay.textContent);
-
+    TotalNum = TotalNum ** inputNum;
+    sign = "power"
+    clearScreen();
 }
-function divide(){
+function powerUp(){
     let inputNum = parseInt(screenDisplay.textContent);
-
+    TotalNum = inputNum; 
+    clearScreen();
+}
+function divideBy(){
+    let inputNum = parseInt(screenDisplay.textContent);
+    TotalNum = TotalNum / inputNum;
+    sign = 'divide'
+    clearScreen();
+}
+function divideWith(){
+    let inputNum = parseInt(screenDisplay.textContent);
+    TotalNum = inputNum;
+    sign = 'divide'
+    clearScreen();
 }
 function equal(){
-    switch(expression.sign){
+    switch(sign){
         case "add":
             add();
-            console.log();
+            screenDisplay.textContent = TotalNum;
+            reset();
             break;
         case "subtract":
             subtract();
-            console.log();
+            screenDisplay.textContent = TotalNum;
+            reset();
             break;
         case "multiply":
             multiply();
-            console.log();
+            screenDisplay.textContent = TotalNum;
+            reset();
             break;
         case "divide":
-            divide();
-            console.log();
+            divideBy();
+            screenDisplay.textContent = TotalNum;
+            reset();
             break;
         case "power":
-            power();
-            console.log();
+            powerTo();
+            screenDisplay.textContent = TotalNum;
+            reset();
             break;
     }
 }
-function reset(){expression = {num1 : 0,num2 : 0}};
+function reset(){TotalNum = 0; sign = ''};
 function clearScreen(){screenDisplay.textContent = ''};
