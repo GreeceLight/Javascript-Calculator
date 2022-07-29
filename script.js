@@ -10,11 +10,8 @@ const powerButton = document.querySelector("#power");
 const divideButton = document.querySelector("#divide");
 const equalButton = document.querySelector("#equals");
 //Object that will be used to calculate the expressions
-expression = {
-    num1 : 0,
-    num2 : 0,
-    sign : "add"
-}
+let TotalNum = 0;
+let sign = "";
 //To enable Party Mode
 let inPartyMode = false;
 //All Event listeners
@@ -44,23 +41,23 @@ buttons.forEach(button => button.addEventListener('click', function(){
 }))
 
 addButton.addEventListener('click', function(){
-    add(expression.num1, expression.num2);
+    add();
 })
 
 subtractButton.addEventListener('click', function(){
-    subtract(expression.num1, expression.num2);
+    subtract();
 })
 
 multiplyButton.addEventListener('click', function(){
-    multiply(expression.num1, expression.num2);
+    multiply();
 })
 
 powerButton.addEventListener('click', function(){
-    power(expression.num1, expression.num2);
+    power();
 })
 
 divideButton.addEventListener('click', function(){
-    divide(expression.num1, expression.num2);
+    divide();
 })
 
 equalButton.addEventListener('click', function(){
@@ -68,71 +65,55 @@ equalButton.addEventListener('click', function(){
 })
 
 
-function add(adnum1, adnum2){
-    adnum1 = parseInt(screenDisplay.textContent) + adnum2;
-    adnum2 = adnum1;
-    expression.num1 = adnum1;
-    expression.num2 = adnum2;
-    expression.sign = "add";
-    screenDisplay.textContent = '';
+function add(){
+    let inputNum = parseInt(screenDisplay.textContent);
+    TotalNum = inputNum + TotalNum;
+    sign = "add";
+    clearScreen();
 }
-function subtract(subnum1, subnum2){
-    subnum1 = parseInt(screenDisplay.textContent) - subnum2;
-    subnum2 = subnum1;
-    expression.num1 = -subnum1;
-    expression.num2 = subnum2;
-    expression.sign = "subtract"
-    screenDisplay.textContent = '';
+function subtract(){
+    let inputNum = parseInt(screenDisplay.textContent);
+    TotalNum = inputNum - TotalNum;
+    sign = "subtract"
+    clearScreen();
 }
-function multiply(mulNum1, mulNum2){
-    if(mulNum2 == 0 && mulNum1 != 0) mulNum2 = 1;
-    mulNum1 = parseInt(screenDisplay.textContent) 
-    mulNum2 = mulNum1 * mulNum2;
-    expression.num1 = mulNum2;
-    expression.num2 = mulNum1;
-    expression.sign = "multiply"
-    screenDisplay.textContent = '';
+function multiply(){
+    let inputNum = parseInt(screenDisplay.textContent);
+    TotalNum = inputNum - TotalNum;
+    sign = "multiply";
+    clearScreen();
 }
-function power(powNum1, powNum2){
-    if(powNum2 == 0) powNum2 = 1
-    powNum1 = parseInt(screenDisplay.textContent) ** powNum2;
-    powNum2 = powNum1;
-    expression.num1 = powNum1;
-    expression.num2 = powNum2;
-    expression.sign = "power"
-    screenDisplay.textContent = '';
+function power(){
+    let inputNum = parseInt(screenDisplay.textContent);
+
 }
-function divide(divNum1, divNum2){
-    if(divNum2 == 0) divNum2 = 1
-    divNum1 = parseInt(screenDisplay.textContent)
-    divNum2 = divNum2 / divNum1
-    expression.num1 = divNum2;
-    expression.num2 = divNum1;
-    expression.sign = "divide"
-    screenDisplay.textContent = '';
+function divide(){
+    let inputNum = parseInt(screenDisplay.textContent);
+
 }
 function equal(){
     switch(expression.sign){
         case "add":
-            add(expression.num1, expression.num2);
-            console.log(expression.num1);
+            add();
+            console.log();
             break;
         case "subtract":
-            subtract(expression.num1, expression.num2);
-            console.log(expression.num1);
+            subtract();
+            console.log();
             break;
         case "multiply":
-            multiply(expression.num1, expression.num2);
-            console.log(expression.num1);
+            multiply();
+            console.log();
             break;
         case "divide":
-            divide(expression.num1, expression.num2);
-            console.log(expression.num1);
+            divide();
+            console.log();
             break;
         case "power":
-            power(expression.num1, expression.num2);
-            console.log(expression.num1);
+            power();
+            console.log();
             break;
     }
 }
-function reset(){expression = {num1 : 0,num2 : 0}}
+function reset(){expression = {num1 : 0,num2 : 0}};
+function clearScreen(){screenDisplay.textContent = ''};
