@@ -86,10 +86,10 @@ function subtract(subnum1, subnum2){
 }
 function multiply(mulNum1, mulNum2){
     if(mulNum2 == 0 && mulNum1 != 0) mulNum2 = 1;
-    mulNum1 = parseInt(screenDisplay.textContent) * mulNum2;
-    mulNum2 = mulNum1;
-    expression.num1 = mulNum1;
-    expression.num2 = mulNum2;
+    mulNum1 = parseInt(screenDisplay.textContent) 
+    mulNum2 = mulNum1 * mulNum2;
+    expression.num1 = mulNum2;
+    expression.num2 = mulNum1;
     expression.sign = "multiply"
     screenDisplay.textContent = '';
 }
@@ -104,10 +104,10 @@ function power(powNum1, powNum2){
 }
 function divide(divNum1, divNum2){
     if(divNum2 == 0) divNum2 = 1
-    divNum1 = parseInt(screenDisplay.textContent) / divNum2;
-    divNum2 = divNum1;
-    expression.num1 = divNum1;
-    expression.num2 = divNum2;
+    divNum1 = parseInt(screenDisplay.textContent)
+    divNum2 = divNum2 / divNum1
+    expression.num1 = divNum2;
+    expression.num2 = divNum1;
     expression.sign = "divide"
     screenDisplay.textContent = '';
 }
