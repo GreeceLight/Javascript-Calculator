@@ -1,7 +1,9 @@
 //Grabbing all the buttons to be used during the calculations
 const screenDisplay = document.querySelector("#screentext");
 const buttons = document.querySelectorAll("#number");
+const decimalButton = document.querySelector("#decimal");
 const clearButton = document.querySelector("#clear");
+const deleteButton = document.querySelector("#delete");
 const partyButton = document.querySelector("#party");
 const addButton = document.querySelector("#add");
 const subtractButton = document.querySelector("#subtract");
@@ -10,8 +12,12 @@ const powerButton = document.querySelector("#power");
 const divideButton = document.querySelector("#divide");
 const equalButton = document.querySelector("#equals");
 //Object that will be used to calculate the expressions
+let NumList = [];
+let operatorList = [];
+let prevOperator = '';
+let hasDecimal = false;
+let hasOperated = false;
 let TotalNum = 0;
-let sign = "";
 //To enable Party Mode
 let inPartyMode = false;
 //All Event listeners
@@ -19,6 +25,16 @@ let inPartyMode = false;
 clearButton.addEventListener('click', function(){
     reset();
     screenDisplay.textContent = ''
+})
+
+deleteButton.addEventListener('click', function(){
+    screenDisplay.textContent = screenDisplay.textContent.slice(0, -1);
+})
+
+decimalButton.addEventListener('click', function(){
+    if(screenDisplay.textContent.length != 11 && !hasDecimal){
+        screenDisplay.textContent= screenDisplay.textContent.concat(decimalButton.textContent);
+    }
 })
 
 partyButton.addEventListener('click', function(){
@@ -34,111 +50,95 @@ partyButton.addEventListener('click', function(){
 
 //Makes pressing all number related buttons to show on screen
 buttons.forEach(button => button.addEventListener('click', function(){
-    if(screenDisplay.textContent.length != 11){
+    if(screenDisplay.textContent.length != 11 && !hasOperated){
         screenDisplay.textContent= screenDisplay.textContent.concat(button.textContent);
     }
-    else return
+    else{
+        clearScreen();
+        hasOperated = false;
+        screenDisplay.textContent= screenDisplay.textContent.concat(button.textContent);
+    }
 }))
 
 addButton.addEventListener('click', function(){
-    add();
+    sendToLists('add');
+    hasDecimal = false;
 })
 
 subtractButton.addEventListener('click', function(){
-    subtract();
+    sendToLists('subtract');
+    hasDecimal = false;
 })
 
 multiplyButton.addEventListener('click', function(){
-    multiply();
+    sendToLists('multiply');
+    hasDecimal = false;
 })
 
 powerButton.addEventListener('click', function(){
-    if(TotalNum == 0){powerUp()}
-    else{powerTo()}
+    sendToLists('power');
+    hasDecimal = false;
 })
 
 divideButton.addEventListener('click', function(){
-    if(TotalNum == 0){divideWith()}
-    else {divideBy()}
+    sendToLists('divide');
+    hasDecimal = false;
 })
 
 equalButton.addEventListener('click', function(){
-    equal();
+    sendToLists(prevOperator)
+    operate();
+    hasDecimal = false;
+    console.log(NumList + ' ' + operatorList);
 })
 
+function add(num){
+    TotalNum += num;
+}
+function subtract(num){
+    if(TotalNum == 0){TotalNum = num}
+    else{
+        TotalNum -= num;
+    }
+}
+function multiply(num){
+        if(TotalNum == 0){
+            TotalNum = 1;
+        }
+        TotalNum *= num;
+}
+function power(num){
+    if(TotalNum == 0){TotalNum = num}
+    else{TotalNum = TotalNum ** num;}
+}
+function divide(num){
+    if(TotalNum == 0){TotalNum = num}
+    else{TotalNum = TotalNum / num;}
+}
+function operate(){
+    for(let i = 0; i<NumList.length; i++){
+        switch(operatorList[i]){
+            case"add":add(NumList[i]); break;
+            case"subtract":subtract(NumList[i]); break;
+            case"multiply":multiply(NumList[i]); break;
+            case"divide":
+                divide(NumList[i]);
+                break;
+            case"power":power(NumList[i]); break;
+        }
+    }
+    if(TotalNum != Infinity)screenDisplay.textContent = TotalNum;
+    else screenDisplay.textContent = 'Nice Try :P';
 
-function add(){
-    let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum = inputNum + TotalNum;
-    sign = "add";
-    clearScreen();
+    hasOperated = true;
 }
-function subtract(){
-    let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum =  (TotalNum * (-1)) - inputNum;
-    sign = "subtract"
-    clearScreen();
-}
-function multiply(){
-    if(TotalNum == 0){
-        TotalNum = 1;
-    }
-    let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum = inputNum * TotalNum;
-    sign = "multiply";
-    clearScreen();
-}
-function power(){
-    let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum = TotalNum ** inputNum;
-    sign = "power"
-    clearScreen();
-}
-function powerUp(){
-    let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum = inputNum; 
-    clearScreen();
-}
-function divideBy(){
-    let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum = TotalNum / inputNum;
-    sign = 'divide'
-    clearScreen();
-}
-function divideWith(){
-    let inputNum = parseInt(screenDisplay.textContent);
-    TotalNum = inputNum;
-    sign = 'divide'
-    clearScreen();
-}
-function equal(){
-    switch(sign){
-        case "add":
-            add();
-            screenDisplay.textContent = TotalNum;
-            reset();
-            break;
-        case "subtract":
-            subtract();
-            screenDisplay.textContent = TotalNum;
-            reset();
-            break;
-        case "multiply":
-            multiply();
-            screenDisplay.textContent = TotalNum;
-            reset();
-            break;
-        case "divide":
-            divideBy();
-            screenDisplay.textContent = TotalNum;
-            reset();
-            break;
-        case "power":
-            powerTo();
-            screenDisplay.textContent = TotalNum;
-            reset();
-            break;
-    }
-}
-function reset(){TotalNum = 0; sign = ''};
+
+function reset(){TotalNum = 0; NumList = []; operatorList = []};
 function clearScreen(){screenDisplay.textContent = ''};
+function sendToLists(operator){
+    NumList.push(parseFloat(screenDisplay.textContent));
+    operatorList.push(operator);
+    if(operatorList.length == 1){operatorList.push(operator)}
+    prevOperator = operator;
+    clearScreen();
+}
