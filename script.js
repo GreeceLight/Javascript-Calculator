@@ -85,6 +85,17 @@ function sendToLists(operator){
     hasDecimal = false;
     clearScreen();
 }
+
+function toScreen(number){
+    if(number.length != 11 && !hasOperated){
+        screenDisplay.textContent= screenDisplay.textContent.concat(number);
+    }
+    else{
+        clearScreen();
+        hasOperated = false;
+        screenDisplay.textContent= screenDisplay.textContent.concat(number);
+    }
+}
 //=======================================================================
 //All event listeners
 clearButton.addEventListener('click', function(){
@@ -92,7 +103,7 @@ clearButton.addEventListener('click', function(){
     screenDisplay.textContent = ''
 })
 deleteButton.addEventListener('click', function(){
-    screenDisplay.textContent = screenDisplay.textContent.slice(0, );
+    screenDisplay.textContent = screenDisplay.textContent.slice(0, -1);
 })
 
 partyButton.addEventListener('click', function(){
@@ -108,14 +119,7 @@ partyButton.addEventListener('click', function(){
 
 //Makes pressing all number related buttons to show on screen
 buttons.forEach(button => button.addEventListener('click', function(){
-    if(screenDisplay.textContent.length != 11 && !hasOperated){
-        screenDisplay.textContent= screenDisplay.textContent.concat(button.textContent);
-    }
-    else{
-        clearScreen();
-        hasOperated = false;
-        screenDisplay.textContent= screenDisplay.textContent.concat(button.textContent);
-    }
+    toScreen(button.textContent)
 }))
 decimalButton.addEventListener('click', function(){
     if(screenDisplay.textContent.length != 11 && !hasDecimal){
@@ -147,4 +151,33 @@ equalButton.addEventListener('click', function(){
     //Have to use this to give one final operator and number before it begins calculating
     sendToLists(prevOperator);
     operate();
+})
+
+//Keyboard Support
+document.addEventListener('keydown', (event)=>{
+    switch(event.key){
+        case '1': toScreen('1');break;
+        case '2': toScreen('2');break;
+        case '3': toScreen('3');break;
+        case '4': toScreen('4');break;
+        case '5': toScreen('5');break;
+        case '6': toScreen('6');break;
+        case '7': toScreen('7');break;
+        case '8': toScreen('8');break;
+        case '9': toScreen('9');break;
+        case '+': sendToLists('add'); break;
+        case '-': sendToLists('subtract'); break;
+        case '*': sendToLists('multiply'); break;
+        case '/': sendToLists('divide'); break;
+        case 'ArrowUp': sendToLists('power'); break;
+        case 'Enter': 
+            sendToLists(prevOperator); 
+            operate(); 
+            break;
+        case 'End': 
+            reset(); 
+            screenDisplay.textContent = '';
+        case 'Delete': 
+            screenDisplay.textContent = screenDisplay.textContent.slice(0, -1);
+    }
 })
