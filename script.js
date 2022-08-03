@@ -12,52 +12,71 @@ const powerButton = document.querySelector("#power");
 const divideButton = document.querySelector("#divide");
 const equalButton = document.querySelector("#equals");
 //Object that will be used to calculate the expressions
+//All Numbers inputted and operators used are stored in these variables
 let NumList = [], operatorList = [];
 let prevOperator = '';
+//Used to determine specific events that can happen like clearing or having 1 decimal
 let hasDecimal = false, hasOperated = false, inPartyMode = false;
-let TotalNum = 0;
-//All Event listeners
-//Clears all variables from calculator and clears the screen
+//A final variable to display to the screen
+let TotalNum = undefined;
 
-function add(num){
-    TotalNum += num;
+//All functions calculating the operations
+function add(num1, num2){
+    return num1 + num2;
 }
-function subtract(num){
-    if(TotalNum == 0){TotalNum = num}
-    else{TotalNum -= num;}
+function subtract(num1, num2){
+    return num1 - num2;
 }
-function multiply(num){
-        if(TotalNum == 0){TotalNum = 1}
-        TotalNum *= num;
+function multiply(num1, num2){
+    return num1 * num2;
 }
-function power(num){
-    if(TotalNum == 0){TotalNum = num}
-    else{TotalNum = TotalNum ** num;}
+function power(num1, num2){
+    return num1 ** num2;
 }
-function divide(num){
-    if(TotalNum == 0){TotalNum = num}
-    else{TotalNum = TotalNum / num;}
+function divide(num1, num2){
+    return num1 / num2;
 }
+
+//The operate function goes through every number and operation in respective variables
+//and does the correct operation according to what the current one is
 function operate(){
     for(let i = 0; i<NumList.length; i++){
         switch(operatorList[i]){
-            case"add":add(NumList[i]); break;
-            case"subtract":subtract(NumList[i]); break;
-            case"multiply":multiply(NumList[i]); break;
-            case"divide":divide(NumList[i]);break;
-            case"power":power(NumList[i]); break;
+            case"add":
+                TotalNum = add(NumList[i-1], NumList[i]); 
+                if(!isNaN(TotalNum)){NumList[i] = TotalNum};
+                break;
+            case"subtract":
+                TotalNum = subtract(NumList[i-1], NumList[i]);
+                if(!isNaN(TotalNum)){NumList[i] = TotalNum}; 
+                break;
+            case"multiply":
+                TotalNum = multiply(NumList[i-1], NumList[i]); 
+                if(!isNaN(TotalNum)){NumList[i] = TotalNum};
+                break;
+            case"divide":
+                TotalNum = divide(NumList[i-1], NumList[i]); 
+                if(!isNaN(TotalNum)){NumList[i] = TotalNum};
+                break;
+            case"power":
+                TotalNum = power(NumList[i-1], NumList[i]); 
+                if(!isNaN(TotalNum)){NumList[i] = TotalNum};
+                break;
         }
     }
-    if(TotalNum != Infinity)screenDisplay.textContent = TotalNum;
-    else screenDisplay.textContent = 'Nice Try :P';
-    console.log(NumList + ' ' + operatorList);
+    //Testing for division by 0(Which gives Infinity)
+    if(isNaN(TotalNum)){screenDisplay.textContent = "Bad Syntax"}
+    else if(TotalNum == Infinity) screenDisplay.textContent = 'Nice Try :P';
+    else screenDisplay.textContent = TotalNum
+    //console.log(NumList + ' ' + operatorList);
     reset();
-    console.log(NumList + ' ' + operatorList);
     hasOperated = true;
 }
-
+//Extra Functions
 function reset(){TotalNum = 0; NumList = []; operatorList = []};
 function clearScreen(){screenDisplay.textContent = ''};
+
+//Used to add numbers and operations to respective arrays
 function sendToLists(operator){
     NumList.push(parseFloat(screenDisplay.textContent));
     operatorList.push(operator);
@@ -66,13 +85,14 @@ function sendToLists(operator){
     hasDecimal = false;
     clearScreen();
 }
-
+//=======================================================================
+//All event listeners
 clearButton.addEventListener('click', function(){
     reset();
     screenDisplay.textContent = ''
 })
 deleteButton.addEventListener('click', function(){
-    screenDisplay.textContent = screenDisplay.textContent.slice(0, -1);
+    screenDisplay.textContent = screenDisplay.textContent.slice(0, );
 })
 
 partyButton.addEventListener('click', function(){
@@ -124,6 +144,7 @@ divideButton.addEventListener('click', function(){
 })
 
 equalButton.addEventListener('click', function(){
-    sendToLists(prevOperator)
+    //Have to use this to give one final operator and number before it begins calculating
+    sendToLists(prevOperator);
     operate();
 })
