@@ -2,6 +2,8 @@ body {
     display: flex;
     flex-direction: column;
 
+    background-color: white;
+
     justify-content: center; align-items: center;
 }
 
@@ -20,8 +22,12 @@ body {
 .screen {
     width: 350px; height: 100px;
     flex-shrink: 0;
+    display: flex;
+    justify-content: end; align-items: center;
 
     margin: 30px;
+
+    font-size: 50px;
 
     border-radius: 10px;
     border: rgb(80, 108, 117) solid 2px;
@@ -49,6 +55,26 @@ body {
     background-color: lightgray;
 }
 
-.button#word{
-    font-size: 20px;
+.button:active {
+    background-color: darkgray;
+    font-size: 30px;
+}
+
+@keyframes color {
+    0%{background-color: white;}
+    10%{background-color: blue;}
+    20%{background-color: red;}
+    30% {background-color: royalblue;}
+    40% {background-color: palegreen;}
+    50% {background-color: purple;}
+    60% {background-color: yellow;}
+    70% {background-color: aqua;}
+    80% {background-color: violet;}
+    90% {background-color: orange;}
+    100%{background-color: white;}
+}
+.animation{
+    animation-name: color;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
 }
